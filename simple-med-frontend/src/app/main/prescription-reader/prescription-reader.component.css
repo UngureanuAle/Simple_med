@@ -1,0 +1,46 @@
+.flex-box{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.flex-box > mat-form-field{
+    margin-right: 1em !important;
+}
+
+mat-form-field{
+    width: 260px;
+    display: block;
+}
+
+.small{
+    width: 150px;
+}
+
+.first-input{
+    margin-right: 1em;
+}
+
+#prescription-form{
+    display: flex;
+    flex-direction: column;
+}
+
+mat-expansion-panel{
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.mat-mdc-row .mat-mdc-cell{
+    cursor: pointer;
+}
+
+.mat-mdc-header-row{
+    background-color: #ebeaff;
+}
+
+.types-container{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}

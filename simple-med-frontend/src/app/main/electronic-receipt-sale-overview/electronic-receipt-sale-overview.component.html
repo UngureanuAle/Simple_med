@@ -1,0 +1,150 @@
+<mat-stepper linear #stepper style="width: 100%;">
+
+    
+    <mat-step [stepControl]="receiptDataForm">
+        <ng-template matStepLabel>Scanează rețetă</ng-template>
+        <form [formGroup]="receiptDataForm" class="stepper-form">
+            <h2>Alege fișier cod de bare (Simulare scanare)</h2>
+            <div style="display: flex; justify-content: start; align-items: center; margin-bottom: 1em;">
+                <mat-form-field class="control" subscriptSizing="dynamic">
+                    <mat-label>Alege Fisier</mat-label>
+                    <ngx-mat-file-input matInput formControlName="barcodee_file" placeholder="Basic Input"
+                        (change)="onBarcodeFileChange($event)"></ngx-mat-file-input>
+                    <mat-icon matSuffix><i class="fa fa-file-text-o" aria-hidden="true" style="padding-right: 5px"></i>
+                    </mat-icon>
+                </mat-form-field>
+                <button mat-flat-button color="primary" style="min-height: 48px; margin-left: 1em"
+                    (click)="onScan()">Scanează</button>
+            </div>
+
+
+            <h2>Date scanate:</h2>
+            <mat-form-field class="control">
+                <mat-label>Seria Rețetei</mat-label>
+                <input matInput formControlName="series" required>
+            </mat-form-field>
+            <mat-form-field class="control">
+                <mat-label>Nr. Rețetei</mat-label>
+                <input matInput formControlName="nr" required>
+            </mat-form-field>
+            <mat-form-field class="control">
+                <mat-label>Nr. de Parafă al Medicului Emitent</mat-label>
+                <input matInput formControlName="stencil_nr" required>
+            </mat-form-field>
+            <mat-form-field class="control">
+                <mat-label>Data Prescrierii</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="prescription_date" placeholder="MM/DD/YYYY">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="control" style="width: 900px">
+                <mat-label>Semnătura digitală a medicului prescriptor</mat-label>
+                <input matInput formControlName="prescriptor_signature" required>
+            </mat-form-field>
+            <div style="display: flex; justify-content: start; align-items: center; margin-bottom: 1em;">
+                <button mat-flat-button color="primary" style="min-height: 48px; margin-bottom: 1em; margin-right: 1em;"
+                    (click)="onVerify()">Verifică</button>
+                <h3 [style.color]="consultationIsErr ? 'red' : 'black'">{{consultationMsg}}</h3>
+            </div>
+
+
+        </form>
+        <div>
+            <button mat-button matStepperPrevious (click)="this.onBack.emit(); resetAll()">Înapoi</button>
+            <button mat-button matStepperNext [disabled]="consultationIsErr">Următor</button>
+        </div>
+
+
+    </mat-step>
+    
+    <mat-step>
+        <ng-template matStepLabel>Date rețetă</ng-template>
+        <app-prescription-reader [prescription]="currentPrescription"></app-prescription-reader>
+        <div>
+            <button mat-button matStepperPrevious>Înapoi</button>
+            <button mat-button matStepperNext>Următor</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Date Preluare</ng-template>
+        <h2>De cine sunt ridicate medicamentele?</h2>
+        <mat-form-field class="control">
+            <mat-label>Ridicat de</mat-label>
+            <mat-select #recieverSelect>
+                <mat-option value="A">Asigurat</mat-option>
+                <mat-option value="I">Împuternicit</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <form [formGroup]="cardForm" class="stepper-form" *ngIf="recieverSelect.value === 'A'">
+            <h2>Simulare scanare card de sanatate (Introdu datele ce ar trebui scanate de pe card manual)</h2>
+            <div class="flex-box">
+                <mat-form-field class="control" style="margin-right: 1em;">
+                    <mat-label>Nume</mat-label>
+                    <input matInput formControlName="last_name">
+                </mat-form-field>
+                <mat-form-field class="control">
+                    <mat-label>Prenume</mat-label>
+                    <input matInput formControlName="first_name">
+                </mat-form-field>
+            </div>
+            <mat-form-field class="control">
+                <mat-label>CNP</mat-label>
+                <input matInput formControlName="cnp">
+            </mat-form-field>
+            <mat-form-field class="control">
+                <mat-label>CID</mat-label>
+                <input matInput formControlName="cid">
+            </mat-form-field>
+            <mat-form-field class="control" style="width: 800px">
+                <mat-label>Cheie Privata</mat-label>
+                <input matInput formControlName="private_key">
+            </mat-form-field>
+
+            <div style="display: flex; justify-content: start; align-items: center;">
+                <button mat-flat-button color="primary" style="min-height: 48px; margin-bottom: 1em; margin-right: 1em"
+                    (click)="checkCardCompatibility()">Verifica compatibilitate cu datele retetei</button>
+                <p style="color:red" *ngIf="!isCarDataCompatible">Datele cardului NU sunt compatibile cu cele de pe
+                    reteta!</p>
+                <p *ngIf="isCarDataCompatible">Datele cardului sunt compatibile cu cele de pe reteta!</p>
+            </div>
+
+
+        </form>
+
+        <form [formGroup]="represantativeForm" class="stepper-form" *ngIf="recieverSelect.value === 'I'">
+            <h2>Introdu datele imputernicitului</h2>
+            <div class="flex-box">
+                <mat-form-field class="control" style="margin-right: 1em;">
+                    <mat-label>Nume</mat-label>
+                    <input matInput formControlName="last_name">
+                </mat-form-field>
+                <mat-form-field class="control">
+                    <mat-label>Prenume</mat-label>
+                    <input matInput formControlName="first_name">
+                </mat-form-field>
+            </div>
+            <mat-form-field class="control">
+                <mat-label>CNP</mat-label>
+                <input matInput formControlName="cnp">
+            </mat-form-field>
+        </form>
+
+        <div>
+            <button mat-button matStepperPrevious>Înapoi</button>
+            <button mat-button matStepperNext [disabled]="!isRecieverDataReady()">Următor</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Elibereaza produse</ng-template>
+        <app-create-prescription-sale (onSaleFinished)="onSaleFinished.emit()" [isOnline]="isOnline" [recieverInfo] = "recieverInfo" [prescriptionInfo]="currentPrescription ? currentPrescription : []" [prescriptionItemList]="currentPrescription ? currentPrescription['prescription_items'] : []"></app-create-prescription-sale>
+        <div>
+            <button mat-button matStepperPrevious>Înapoi</button>
+        </div>
+    </mat-step>
+    
+
+
+
+
+</mat-stepper>

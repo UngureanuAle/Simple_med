@@ -1,0 +1,110 @@
+<div class="sales-history-container">
+    <form [formGroup]="searchForm" id="search-form">
+        <mat-form-field class="field" subscriptSizing="dynamic">
+            <mat-label>Cod Produs</mat-label>
+            <input matInput formControlName="cod" [readonly]="true">
+            <button mat-icon-button matSuffix (click)="openProductDialog()" >
+                <mat-icon>insert_drive_file</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="field" subscriptSizing="dynamic">
+            <mat-label>CNP Client</mat-label>
+            <input matInput formControlName="cnp" [readonly]="true">
+            <button mat-icon-button matSuffix (click)="openClientDialog()">
+                <mat-icon>insert_drive_file</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="field" subscriptSizing="dynamic">
+            <mat-label>Interval Date</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate formControlName="start_date" placeholder="MM/DD/YYYY">
+              <input matEndDate formControlName="end_date" placeholder="MM/DD/YYYY">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" class="field" style="min-height: 48px;"
+            (click)="searchSales()">Caută</button>
+        <button mat-flat-button color="primary" class="field" style="min-height: 48px;"
+            (click)="clearFilters()">Șterge
+            Filtre</button>
+    </form>
+
+    <table mat-table [dataSource]="salesList" multiTemplateDataRows class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.id }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created_on">
+            <th mat-header-cell *matHeaderCellDef>Data/Ora</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.created_on }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cnp">
+            <th mat-header-cell *matHeaderCellDef>CNP Client</th>
+            <td mat-cell *matCellDef="let element"> {{ element.client_cnp }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_price">
+            <th mat-header-cell *matHeaderCellDef>Preț total</th>
+            <td mat-cell *matCellDef="let element"> {{ element.total_price }} RON </td>
+        </ng-container>
+
+        <ng-container matColumnDef="operator">
+            <th mat-header-cell *matHeaderCellDef>Operator</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.operator }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prescription">
+            <th mat-header-cell *matHeaderCellDef>Cu reteta</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-button color="primary" (click)="openPrescriptionDetails(element.prescription)" *ngIf="element.prescription">
+                    Vezi Reteta
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deleteAction">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent" (click)="deleteSale(element)" style="color: red">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+            </td>
+          </ng-container>
+
+        <ng-container matColumnDef="expand">
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+
+            </th>
+
+            <td mat-cell *matCellDef="let element">
+                <mat-icon>{{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                <div class="example-element-detail"
+                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <app-expandable-sales-row style="width: 100%; padding-left: 3em;" [saleItems]="element.sale_items" (onDeletedLastItem)="searchSales()"></app-expandable-sales-row>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element" (click)="toggleExpandedRow(element)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+</div>

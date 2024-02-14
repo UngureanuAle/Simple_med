@@ -1,0 +1,48 @@
+<div class="dialog-container">
+    <h1>Alege Client</h1>
+    <form id="search-form" [formGroup]="searchForm">
+        <mat-form-field class="field" style="width: 100%;" subscriptSizing="dynamic">
+            <mat-label>CNP</mat-label>
+            <input matInput formControlName="cnp">
+        </mat-form-field>
+        <mat-form-field class="field" style="width: 100%;" subscriptSizing="dynamic">
+            <mat-label>Nume</mat-label>
+            <input matInput formControlName="last_name">
+        </mat-form-field>
+        <mat-form-field class="field" style="width: 100%;" subscriptSizing="dynamic">
+            <mat-label>Prenume</mat-label>
+            <input matInput formControlName="first_name">
+        </mat-form-field>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="searchClients()">Caută</button>
+    </form>
+    <table mat-table [dataSource]="clientList" style="max-height: 650px; height: 100%; overflow-y: scroll;">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="cnp">
+          <th mat-header-cell *matHeaderCellDef>CNP</th>
+          <td mat-cell *matCellDef="let element">{{element.cnp}}</td>
+        </ng-container>
+  
+        <!-- Weight Column -->
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell *matHeaderCellDef>Nume</th>
+          <td mat-cell *matCellDef="let element">{{element.last_name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="first_name">
+            <th mat-header-cell *matHeaderCellDef>Prenume</th>
+            <td mat-cell *matCellDef="let element">{{element.first_name}}</td>
+          </ng-container>
+  
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" backgroundColor="primary"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedClient=row"
+        [class.selected-row]="row===selectedClient"></tr>
+      </table>
+      <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="onOk()">OK</button>
+</div>

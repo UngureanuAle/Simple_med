@@ -1,0 +1,27 @@
+@import '../../../styles.css';
+
+.centralizer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-form{
+    margin-top: 10em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4em;
+    min-width: 25%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+h1{
+    margin-bottom: 1em;
+}
+
+.error-msg{
+    color: red;
+}

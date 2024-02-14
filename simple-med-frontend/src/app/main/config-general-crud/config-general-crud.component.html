@@ -1,0 +1,30 @@
+<form [formGroup]="generalConfigForm" id="crud-form">
+    <mat-form-field class="field" style="width: 350px">
+        <mat-label>Numele Farmaciei</mat-label>
+        <input matInput formControlName="pharmacyName">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 350px">
+        <mat-label>CUI</mat-label>
+        <input matInput formControlName="pharmacyCode">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 350px">
+        <mat-label>Locația Farmaciei</mat-label>
+        <input matInput formControlName="pharmacyLocation">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 350px">
+        <mat-label>Cod Casa de Asigurari Contractată</mat-label>
+        <input matInput formControlName="insuranceHouse">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 350px">
+        <mat-label>Nr. Contract cu Casa de Asigurari</mat-label>
+        <input matInput formControlName="insuranceHouseContractNo">
+    </mat-form-field>
+    <div class="btns-container">
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="!isEditing" (click)="toggleEditMode(false)">Anulează</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="isEditing" (click)="toggleEditMode(true)">Modifică</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="(!isEditing)" (click)="onOk()">OK</button>
+    </div>
+</form>

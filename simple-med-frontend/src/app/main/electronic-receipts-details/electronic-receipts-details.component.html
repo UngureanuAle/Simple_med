@@ -1,0 +1,17 @@
+<div *ngIf="!notFound">
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Date Reteta">
+            <div class="tab-container">
+                <app-prescription-reader [prescription]="prescriptionData"></app-prescription-reader>
+            </div>
+        </mat-tab>
+        <mat-tab label="Medicamente eliberate">
+            <div class="tab-container">
+                <app-prescription-summary [prescriptionItemsData]="prescriptionData['prescription_items']"></app-prescription-summary>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<h1 *ngIf="notFound">Datele retetei electronice nu au fost gasite(404)!</h1>
+
+

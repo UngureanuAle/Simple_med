@@ -1,0 +1,35 @@
+<div class="main-container" autosize>
+    <mat-drawer-container class="drawer-container" >
+        <mat-drawer #drawer class="sidenav" mode="side" position="start" opened>
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <h1 style="font-weight: bold;"><i class="fa fa-user-md" aria-hidden="true"></i> SimpleMED</h1>
+                <h2>{{currentUser}}</h2>
+            </div>
+            
+            <mat-nav-list>
+                <mat-list-item class="nav-item current" (click)="reroute('main/inventory'); activeNavItem='inventory';" 
+                    [class.current]="activeNavItem === 'inventory'">
+                    <span><i class="fa fa-medkit" aria-hidden="true"></i> Stoc/Produse</span>
+                </mat-list-item>
+                <mat-list-item class="nav-item" (click)="reroute('main/sales'); activeNavItem='sales'" [class.current]="activeNavItem === 'sales'">
+                    <span><i class="fa fa-money" aria-hidden="true"></i> Vânzări</span>
+                </mat-list-item>
+                <mat-list-item class="nav-item" (click)="reroute('main/clients'); activeNavItem='clients'" [class.current]="activeNavItem === 'clients'">
+                    <span><i class="fa fa-users" aria-hidden="true"></i> Clienți</span>
+                </mat-list-item>
+                <mat-list-item class="nav-item" (click)="reroute('main/prescriptions'); activeNavItem='receipts'" [class.current]="activeNavItem === 'receipts'">
+                    <span><i class="fa fa-file-text-o" aria-hidden="true"></i> Rețete eliberate</span>
+                </mat-list-item>
+                <mat-list-item *ngIf="this.auth.isCurrentOperatorAdmin()" class="nav-item" (click)="reroute('main/configs'); activeNavItem='configs'" [class.current]="activeNavItem === 'configs'">
+                    <span><i class="fa fa-cogs" aria-hidden="true"></i> Configuratii</span>
+                </mat-list-item>
+                <mat-list-item class="nav-item" (click)="logout()">
+                    <span><i class="fa fa-sign-out" aria-hidden="true"></i> Deconectare</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content class="content-container">
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

@@ -1,0 +1,110 @@
+<div class="overview-container">
+  <div class="overview" [hidden]="currentView !== 'OVERVIEW'">
+    <form [formGroup]="searchForm" id="search-form">
+      <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Cod</mat-label>
+        <input matInput formControlName="cod">
+      </mat-form-field>
+      <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Nume Produs</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Producător</mat-label>
+        <input matInput formControlName="manufacturer">
+      </mat-form-field>
+      <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Cu prescriptie</mat-label>
+        <mat-select formControlName="is_prescribed">
+          <mat-option value=false>Nu</mat-option>
+          <mat-option value=true>Da</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Tip</mat-label>
+        <mat-select formControlName="med_type">
+          <mat-option value=1>Antibiotice</mat-option>
+          <mat-option value=2>Antivirale</mat-option>
+          <mat-option value=3>Antiinflamatoare</mat-option>
+          <mat-option value=4>Antidepresive, anxiolitice și antipsihotice</mat-option>
+          <mat-option value=5>Antineoplazice</mat-option>
+          <mat-option value=6>Antidiabetice</mat-option>
+          <mat-option value=7>Anticoagulante și antiagregante plachetare</mat-option>
+          <mat-option value=8>Antipiretice</mat-option>
+          <mat-option value=9>Analgezice</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Mod Administrare</mat-label>
+        <mat-select formControlName="adm_type">
+          <mat-option value=1>Orală</mat-option>
+          <mat-option value=2>Intravenoasă</mat-option>
+          <mat-option value=3>Topicală</mat-option>
+          <mat-option value=4>Inhalatorie</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="button-bar">
+        <button mat-flat-button color="primary" class="field" style="min-height: 48px;"
+        (click)="fetchProducts()">Caută</button>
+        <button mat-flat-button color="primary" class="field" style="min-height: 48px;" (click)="clearFilters()">Șterge
+        Filtre</button>
+      </div>
+      
+    </form>
+    <table mat-table [dataSource]="product_list" class="mat-elevation-z8 demo-table">
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="cod">
+        <th mat-header-cell *matHeaderCellDef>Cod</th>
+        <td mat-cell *matCellDef="let element">{{element.cod}}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nume Produs</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Preț</th>
+        <td mat-cell *matCellDef="let element">{{element.price}} RON</td>
+      </ng-container>
+
+      <ng-container matColumnDef="manufacturer">
+        <th mat-header-cell *matHeaderCellDef>Producator</th>
+        <td mat-cell *matCellDef="let element">{{element.manufacturer}}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="med_type">
+        <th mat-header-cell *matHeaderCellDef>Tip</th>
+        <td mat-cell *matCellDef="let element">{{element.med_type_display}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="adm_type">
+        <th mat-header-cell *matHeaderCellDef>Mod Admin.</th>
+        <td mat-cell *matCellDef="let element">{{element.adm_type_display}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="is_prescribed">
+        <th mat-header-cell *matHeaderCellDef>Prescripție</th>
+        <td mat-cell *matCellDef="let element">{{element.is_prescribed ? 'Da' : 'Nu'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="insertAction">
+        <th mat-header-cell *matHeaderCellDef><button mat-flat-button color="primary" (click)="openEditPage('INSERT', null)">+</button></th>
+        <td mat-cell *matCellDef="let element"></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" backgroundColor="primary"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditPage('UPDATE', row)"></tr>
+    </table>
+  </div>
+
+  <app-crud-products [currentProduct]="currentProduct" [currentOperation]="nextOperation" [hidden]="currentView !== 'DETAILS'" (onBack)="toggleBetweenViews()"></app-crud-products>
+</div>

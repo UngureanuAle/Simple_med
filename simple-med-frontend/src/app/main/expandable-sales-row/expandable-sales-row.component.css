@@ -1,0 +1,14 @@
+.mat-mdc-header-row{
+    background-color: #ebeaff;
+}
+
+
+.critical-warning{
+    color: red !important;
+    font-weight: bold;
+}
+  
+.normal-warning{
+  color: rgb(210, 210, 0);
+  font-weight: bold;
+}

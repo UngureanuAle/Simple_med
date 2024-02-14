@@ -1,0 +1,78 @@
+<form [formGroup]="crudForm" id="crud-form" class="mat-elevation-z8">
+    <h1 [hidden]="currentOperation !== 'INSERT'">Adaugă produs</h1>
+    <button mat-flat-button color="primary" style="min-height: 48px; width: 100%; margin-bottom: 1em"
+        [hidden]="isEditing || currentOperation==='INSERT'" (click)="viewProspect()">Vezi Prospect <i class="fa fa-file-text-o"
+            aria-hidden="true"></i></button>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Cod (EAN-13)</mat-label>
+        <input matInput formControlName="cod">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Nume Produs</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Producător</mat-label>
+        <input matInput formControlName="manufacturer">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Preț</mat-label>
+        <input matInput formControlName="price">
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Vândut la bucată</mat-label>
+        <mat-select formControlName="sold_per_unit" [disabled]="true">
+            <mat-option [value]="false">Nu</mat-option>
+            <mat-option [value]="true">Da</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%" *ngIf="crudForm.value['sold_per_unit']">
+        <mat-label>Preț pe bucată</mat-label>
+        <input matInput formControlName="price_per_unit">
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%" *ngIf="crudForm.value['sold_per_unit']">
+        <mat-label>Bucăți pe cutie</mat-label>
+        <input matInput formControlName="units_per_box">
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%" >
+        <mat-label>Tip</mat-label>
+        <mat-select formControlName="med_type" [disabled]="true">
+            <mat-option *ngFor="let option of medTypeOptions" [value]="option[0]">{{ option[1] }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Mod Administrare</mat-label>
+        <mat-select formControlName="adm_type">
+            <mat-option *ngFor="let option of admTypeOptions" [value]="option[0]">{{ option[1] }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Descriere</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Alege Fisier Prospect</mat-label>
+        <ngx-mat-file-input matInput formControlName="prospect" placeholder="Basic Input"></ngx-mat-file-input>
+        <mat-icon matSuffix><i class="fa fa-file-text-o" aria-hidden="true" style="padding-right: 5px"></i> </mat-icon>
+    </mat-form-field>
+    <mat-checkbox class="field" color="primary" formControlName="is_prescribed" style="margin-bottom: 2em">Cu prescripție</mat-checkbox>
+  
+
+    <p class="error" *ngIf="errMsg">{{errMsg}}</p>
+    <div class="btns-container">
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="goBack()"
+            [hidden]="isEditing && currentOperation==='UPDATE'">Înapoi</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="!isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(false)">Anulează</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(true)">Modifică</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="(!isEditing && currentOperation!=='INSERT')" (click)="onOK()">OK</button>
+        <button mat-flat-button color="warn" style="min-height: 48px;"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="deleteProduct()">Șterge</button>
+    </div>
+</form>

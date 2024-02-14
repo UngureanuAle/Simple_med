@@ -1,0 +1,65 @@
+<table mat-table [dataSource]="batchesData" style="width: 100%; outline: 2px solid black">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="product_id">
+        <th mat-header-cell *matHeaderCellDef>productID</th>
+        <td mat-cell *matCellDef="let element">{{element.product_id}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="batchNr">
+        <th mat-header-cell *matHeaderCellDef>Cod Lot</th>
+        <td mat-cell *matCellDef="let element">{{element.batch_nr}}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="createdOn">
+        <th mat-header-cell *matHeaderCellDef>Data Adăugării</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.created_on}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="provider">
+        <th mat-header-cell *matHeaderCellDef>Furnizor</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.provider}}
+        </td>
+    </ng-container>
+
+    
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="totalInitial">
+        <th mat-header-cell *matHeaderCellDef>Unități Adăugate</th>
+        <td mat-cell *matCellDef="let element">{{element.initial_pieces}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="paid_price_per_unit">
+        <th mat-header-cell *matHeaderCellDef>Preț plătit/Unitate</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.paid_price_per_unit}} RON
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total_price">
+        <th mat-header-cell *matHeaderCellDef>Preț Total Platit</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.paid_price_per_unit * element.initial_pieces}} RON
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="insertAction">
+        <th mat-header-cell *matHeaderCellDef><button mat-flat-button color="primary" (click)="sendInsertBatchSignal()">+</button></th>
+        <td mat-cell *matCellDef="let element"></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" backgroundColor="primary"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="sendCurrentBatch(row)"></tr>
+</table>
+
+<p *ngIf="batchesData.length <= 0" style="color:red">Nu există stocuri disponibile pentru acest produs</p>

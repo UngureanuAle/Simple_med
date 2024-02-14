@@ -1,0 +1,43 @@
+<form [formGroup]="crudForm" id="crud-form" class="mat-elevation-z8">
+    <h1 [hidden]="currentOperation !== 'INSERT'">Adaugă client</h1>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Nume de utilizator</mat-label>
+        <input matInput formControlName="username">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Nume</mat-label>
+        <input matInput formControlName="last_name">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Prenume</mat-label>
+        <input matInput formControlName="first_name">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Administrator?</mat-label>
+        <mat-select matInput formControlName="is_admin">
+            <mat-option value=true>Da</mat-option>
+            <mat-option value=false>Nu</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Parola</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" [disabled]="!isEditing">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+    <p class="error" *ngIf="errMsg">{{errMsg}}</p>
+    <div class="btns-container">
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="goBack()"
+            [hidden]="isEditing && currentOperation==='UPDATE'">Înapoi</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="!isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(false)">Anulează</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(true)">Modifică</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="(!isEditing && currentOperation!=='INSERT')" (click)="onOk()">OK</button>
+        <button mat-flat-button color="warn" style="min-height: 48px;"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="deleteUser()">Șterge</button>
+    </div>
+</form>

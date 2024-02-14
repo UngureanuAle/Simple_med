@@ -1,0 +1,46 @@
+<form [formGroup]="crudForm" id="crud-form" class="mat-elevation-z8">
+    <h1 [hidden]="currentOperation !== 'INSERT'">Adaugă lot</h1>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Cod Lot</mat-label>
+        <input matInput formControlName="batch_nr">
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Furnizor</mat-label>
+        <input matInput formControlName="provider">
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%; margin-bottom: 1em;">
+        <mat-label>Data Adăugării</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="created_on">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Unități Adăugate</mat-label>
+        <input matInput formControlName="initial_pieces">
+    </mat-form-field>
+
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Preț plătit/Unitate</mat-label>
+        <input matInput formControlName="paid_price_per_unit">
+    </mat-form-field>
+
+  
+    
+    <p class="error" *ngIf="errMsg">{{errMsg}}</p>
+    <div class="btns-container">
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="goBack()"
+            [hidden]="isEditing && currentOperation==='UPDATE'">Înapoi</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="!isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(false)">Anulează</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(true)">Modifică</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="(!isEditing && currentOperation!=='INSERT')" (click)="onOk()">OK</button>
+        <button mat-flat-button color="warn" style="min-height: 48px;"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="deleteBatch()">Șterge</button>
+    </div>
+</form>

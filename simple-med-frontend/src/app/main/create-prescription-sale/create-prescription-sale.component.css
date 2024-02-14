@@ -1,0 +1,26 @@
+.prescripton-item-data-container  mat-form-field{
+    margin-right: 1em;
+}
+
+.sale-scan-container{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin-bottom: 2em;
+}
+
+.mat-mdc-header-row{
+    background-color: #ebeaff;
+}
+
+.prescription-column{
+    background-color: #a8a4fb;
+}
+
+.error-container{
+    margin: 2em 0;
+}
+
+.error-container *{
+    color: red;
+}

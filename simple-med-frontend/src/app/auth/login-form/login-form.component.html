@@ -1,0 +1,13 @@
+<div class="centralizer">
+    <form [formGroup]="loginForm" id="login-form">
+        <h1>SimpleMED</h1>
+        <mat-form-field style="width: 100%">
+            <input matInput type="text" placeholder="Nume Utilizator" formControlName="username" id="username">
+        </mat-form-field>
+        <mat-form-field style="width: 100%">
+            <input matInput type="password" placeholder="Parola" formControlName="password" id="password">
+        </mat-form-field>
+        <p class="error-msg" *ngIf="errMessage">{{errMessage}}</p>
+        <button mat-flat-button color="primary" (click)="submitLogin()" style="width: 100%">Submit</button>
+    </form>
+</div>

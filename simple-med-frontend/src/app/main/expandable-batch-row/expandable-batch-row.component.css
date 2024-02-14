@@ -1,0 +1,17 @@
+.mat-mdc-header-row{
+    background-color: #ebeaff;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell{
+    filter: brightness(0.95);
+}
+
+.critical-warning{
+    color: red !important;
+    font-weight: bold;
+}
+  
+.normal-warning{
+  color: rgb(210, 210, 0);
+  font-weight: bold;
+}

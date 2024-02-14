@@ -1,0 +1,53 @@
+<div class="dialog-container">
+    <h1>Alege Produs</h1>
+    <form id="search-form" [formGroup]="searchForm">
+        <mat-form-field class="field" style="width: 100%;" subscriptSizing="dynamic">
+            <mat-label>Cod</mat-label>
+            <input matInput formControlName="cod">
+        </mat-form-field>
+        <mat-form-field class="field" style="width: 100%;" subscriptSizing="dynamic">
+            <mat-label>Nume Produs</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="field" style="width: 100%;" subscriptSizing="dynamic">
+            <mat-label>Producător</mat-label>
+            <input matInput formControlName="manufacturer">
+        </mat-form-field>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="searchProducts()">Caută</button>
+    </form>
+    <table mat-table [dataSource]="productList" style="max-height: 650px; height: 100%; overflow-y: scroll;">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="cod">
+          <th mat-header-cell *matHeaderCellDef>Cod</th>
+          <td mat-cell *matCellDef="let element">{{element.cod}}</td>
+        </ng-container>
+  
+        <!-- Weight Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nume Produs</th>
+          <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="manufacturer">
+          <th mat-header-cell *matHeaderCellDef>Producător</th>
+          <td mat-cell *matCellDef="let element">{{element.manufacturer}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Preț</th>
+            <td mat-cell *matCellDef="let element">{{element.price}}</td>
+        </ng-container>
+  
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" backgroundColor="primary"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedProduct=row"
+        [class.selected-row]="row===selectedProduct"></tr>
+      </table>
+      <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="onOk()">OK</button>
+</div>

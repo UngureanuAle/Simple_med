@@ -1,0 +1,95 @@
+<div class="overview-container">
+    <div class="overview" [hidden]="currentView !== 'OVERVIEW'">
+        <form [formGroup]="searchForm" id="search-form">
+            <mat-form-field class="field" subscriptSizing="dynamic">
+                <mat-label>Cod Produs</mat-label>
+                <input matInput formControlName="cod">
+            </mat-form-field>
+            <mat-form-field class="field" subscriptSizing="dynamic">
+                <mat-label>Nume Produs</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" class="field" style="min-height: 48px;"
+                (click)="fetchBatches()">Caută</button>
+            <button mat-flat-button color="primary" class="field" style="min-height: 48px;"
+                (click)="clearFilters()">Șterge
+                Filtre</button>
+        </form>
+        <table mat-table [dataSource]="batch_list" multiTemplateDataRows class="mat-elevation-z8">
+            <ng-container matColumnDef="codProduct">
+                <th mat-header-cell *matHeaderCellDef>Cod Produs</th>
+                <td mat-cell *matCellDef="let element">
+                    <div style="display: flex; justify-content: start; align-items: center;">
+                        <mat-icon *ngIf="element.total_current < 20 || isExpiring(element.batches) !== 0"
+                            [class.critical-warning]="element.total_current < 10 || isExpiring(element.batches) === -1"
+                            [class.normal-warning]="element.total_current < 20 || isExpiring(element.batches) === -2"
+                            style="font-weight: normal;">warning</mat-icon>
+
+                        <span>{{ element.product.cod }}</span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nameProduct">
+                <th mat-header-cell *matHeaderCellDef>Nume Produs</th>
+                <td mat-cell *matCellDef="let element"> {{ element.product.name }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalInitial">
+                <th mat-header-cell *matHeaderCellDef>Total Inițial</th>
+                <td mat-cell *matCellDef="let element"> {{ element.total_initial }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalCurrent">
+                <th mat-header-cell *matHeaderCellDef>Unități Rămase</th>
+                <td mat-cell *matCellDef="let element">
+                    <span [class.critical-warning]="element.total_current < 10"
+                        [class.normal-warning]="element.total_current < 20">{{ element.total_current }}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="openedBox">
+                <th mat-header-cell *matHeaderCellDef #tooltip="matTooltip" matTooltip="Această coloană ne informează dacă mai există o cutie deschisă în cazul medicamentelor vândute la bucată">Cutie Deschisă? <i class="fa fa-info-circle"></i></th>
+                <td mat-cell *matCellDef="let element"> {{ element.opened_box ? 'Da' : 'Nu'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="leftInBox">
+                <th mat-header-cell *matHeaderCellDef>Bucăți rămase în cutia deschisă</th>
+                <td mat-cell *matCellDef="let element"> {{ element.left_in_box }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expand">
+                <th mat-header-cell *matHeaderCellDef aria-label="row actions">
+
+                </th>
+
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon>{{ expandedElement === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+                </td>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <app-expandable-batch-row (onSelectedBatch)="openEditPage('UPDATE', $event)"
+                            (onInsertBatch)="openEditPage('INSERT', $event);" [batchesData]="mapBatchData(element)"
+                            [productId]="element.product.id"
+                            style="width: 100%; padding-left: 3em;"></app-expandable-batch-row>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element" (click)="toggleExpandedRow(element)">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+    </div>
+
+    <app-crud-batches [currentOperation]="nextOperation" [currentBatch]="currentBatch" (onBack)="toggleBetweenViews()"
+        (onCreatedUpdatedBatch)="fetchBatches()" [hidden]="currentView !== 'DETAILS'"></app-crud-batches>
+</div>

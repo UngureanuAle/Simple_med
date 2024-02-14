@@ -1,0 +1,74 @@
+<div class="overview-container">
+    <div class="overview" [hidden]="currentView !== 'OVERVIEW'">
+      <form [formGroup]="searchForm" id="search-form">
+        <mat-form-field class="field" subscriptSizing="dynamic">
+          <mat-label>Nume de utilizator</mat-label>
+          <input matInput formControlName="username">
+        </mat-form-field>
+        <mat-form-field class="field" subscriptSizing="dynamic">
+          <mat-label>Nume</mat-label>
+          <input matInput formControlName="last_name">
+        </mat-form-field>
+        <mat-form-field class="field" subscriptSizing="dynamic">
+          <mat-label>Prenume</mat-label>
+          <input matInput formControlName="first_name">
+        </mat-form-field>
+        <mat-form-field class="field" subscriptSizing="dynamic">
+            <mat-label>Administrator</mat-label>
+            <mat-select formControlName="is_admin">
+                <mat-option value=true>Da</mat-option>
+                <mat-option value=false>Nu</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        <div class="button-bar">
+          <button mat-flat-button color="primary" class="field" style="min-height: 48px;"
+          (click)="fetchUsers()">Caută</button>
+          <button mat-flat-button color="primary" class="field" style="min-height: 48px;" (click)="clearFilters()">Șterge
+          Filtre</button>
+        </div>
+        
+      </form>
+      <table mat-table [dataSource]="usersList" class="mat-elevation-z8 demo-table">
+        <!-- Id Column -->
+=
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>Nume de utilizator</th>
+          <td mat-cell *matCellDef="let element">{{element.username}}</td>
+        </ng-container>
+  
+        <!-- Weight Column -->
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell *matHeaderCellDef>Nume</th>
+          <td mat-cell *matCellDef="let element">{{element.last_name}}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="first_name">
+          <th mat-header-cell *matHeaderCellDef>Prenume</th>
+          <td mat-cell *matCellDef="let element">{{element.first_name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="is_admin">
+            <th mat-header-cell *matHeaderCellDef>Administrator?</th>
+            <td mat-cell *matCellDef="let element">{{element.is_admin ? 'Da' : 'Nu'}}</td>
+          </ng-container>
+  
+        <ng-container matColumnDef="insertAction">
+          <th mat-header-cell *matHeaderCellDef><button mat-flat-button color="primary" (click)="openEditPage('INSERT', null)">+</button></th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" backgroundColor="primary"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEditPage('UPDATE', row)"></tr>
+      </table>
+    </div>
+    
+    <app-crud-users [currentUser] = "currentUser" [currentOperation]="nextOperation" (onBack)="toggleBetweenViews()" [hidden]="currentView !== 'DETAILS'"></app-crud-users>
+</div>

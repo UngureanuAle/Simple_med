@@ -1,0 +1,33 @@
+<form [formGroup]="crudForm" id="crud-form" class="mat-elevation-z8">
+    <h1 [hidden]="currentOperation !== 'INSERT'">Adaugă client</h1>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>CNP</mat-label>
+        <input matInput formControlName="cnp">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Nume</mat-label>
+        <input matInput formControlName="last_name">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Prenume</mat-label>
+        <input matInput formControlName="first_name">
+    </mat-form-field>
+    <mat-form-field class="field" style="width: 100%">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phone_nr">
+    </mat-form-field>
+
+    <p class="error" *ngIf="errMsg">{{errMsg}}</p>
+    <div class="btns-container">
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em" (click)="goBack()"
+            [hidden]="isEditing && currentOperation==='UPDATE'">Înapoi</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="!isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(false)">Anulează</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="toggleEditMode(true)">Modifică</button>
+        <button mat-flat-button color="primary" style="min-height: 48px; margin-right: 1em"
+            [hidden]="(!isEditing && currentOperation!=='INSERT')" (click)="onOk()">OK</button>
+        <button mat-flat-button color="warn" style="min-height: 48px;"
+            [hidden]="isEditing || currentOperation==='INSERT'" (click)="deleteClient()">Șterge</button>
+    </div>
+</form>

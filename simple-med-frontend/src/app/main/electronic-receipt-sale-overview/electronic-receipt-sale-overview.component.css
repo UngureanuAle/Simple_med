@@ -1,0 +1,10 @@
+.stepper-form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+
+.control{
+    width: 350px;
+}

@@ -1,0 +1,21 @@
+<div class="sales-page-container">
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Crează Vânzare">
+            <div class="tab-container">
+                <app-sales-create></app-sales-create>
+                
+            </div>
+        </mat-tab>
+        <mat-tab label="Istoric">
+            <div class="tab-container">
+                <app-sales-history></app-sales-history>
+            </div>
+        </mat-tab>
+        <mat-tab label="Statistici/Rapoarte" [disabled]="!auth.isCurrentOperatorAdmin()">
+            <div class="tab-container">
+                
+                <app-stats-overview></app-stats-overview>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

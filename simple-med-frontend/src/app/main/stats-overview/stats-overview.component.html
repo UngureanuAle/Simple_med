@@ -1,0 +1,82 @@
+<form [formGroup]="filtersForm" id="filters-form">
+    <mat-form-field class="field" subscriptSizing="dynamic">
+        <mat-label>Interval Date</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="start_date" placeholder="MM/DD/YYYY">
+            <input matEndDate formControlName="end_date" placeholder="MM/DD/YYYY">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" class="field" style="min-height: 48px;" (click)="createReports()">Creează
+        Rapoarte</button>
+    <button mat-flat-button color="primary" class="field" style="min-height: 48px;" (click)="filtersForm.reset()">Șterge
+        Interval</button>
+</form>
+
+<div class="dashboard-numbers-container">
+    <div class="dashboard-number-wrapper sales mat-elevation-z8">
+        <h1>{{generalStats.sales}}</h1>
+        <h3>Vânzări</h3>
+    </div>
+    <div class="dashboard-number-wrapper income mat-elevation-z8">
+        <h1>{{generalStats.income}} RON</h1>
+        <h3>Venituri</h3>
+    </div>
+    <div class="dashboard-number-wrapper profit mat-elevation-z8">
+        <h1>{{generalStats.profit}} RON</h1>
+        <h3>Profit</h3>
+    </div>
+    <div class="dashboard-number-wrapper profit-percentage mat-elevation-z8">
+        <h1>{{generalStats.profitMargin}}%</h1>
+        <h3>Marjă de Profit (%)</h3>
+    </div>
+    <div class="dashboard-number-wrapper profit-percentage mat-elevation-z8">
+        <h1>{{generalStats.investments}} RON</h1>
+        <h3>Investiții în stocuri</h3>
+    </div>
+    <div class="dashboard-number-wrapper receipts mat-elevation-z8">
+        <h1>{{generalStats.processedReceipts}}</h1>
+        <h3>Rețete Eliberate</h3>
+    </div>
+    <div class="dashboard-number-wrapper new-clients mat-elevation-z8">
+        <h1>{{generalStats.newClients}}</h1>
+        <h3>Clienți Noi</h3>
+    </div>
+</div>
+
+
+
+<div class="charts-container">
+    <div class="chart-wrapper mat-elevation-z8">
+        <h2>Evoluție venituri, profit și investiții</h2>
+        <ngx-charts-line-chart [view]="[650,400]" [results]="incomeChartData" [gradient]="gradient" [xAxis]="showXAxis"
+            [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="true">
+        </ngx-charts-line-chart>
+    </div>
+    <div class="chart-wrapper mat-elevation-z8">
+        <h2>Evoluție vânzări</h2>
+        <ngx-charts-line-chart [view]="[650,400]" [results]="salesChartData" [gradient]="gradient" [xAxis]="showXAxis"
+            [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="true">
+        </ngx-charts-line-chart>
+    </div>
+    <div class="chart-wrapper mat-elevation-z8">
+        <h2>Evoluție clientela</h2>
+        <ngx-charts-line-chart [view]="[650,400]" [results]="clientChartData" [gradient]="gradient" [xAxis]="showXAxis"
+            [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="true">
+        </ngx-charts-line-chart>
+    </div>
+    <div class="chart-wrapper mat-elevation-z8" hidden>
+        <h2>Evoluție număr de rețete electronice eliberate</h2>
+        <ngx-charts-line-chart [view]="[650,400]" [results]="receiptChartData" [gradient]="gradient" [xAxis]="showXAxis"
+            [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [timeline]="true">
+        </ngx-charts-line-chart>
+    </div>
+
+
+</div>

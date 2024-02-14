@@ -1,0 +1,50 @@
+<table mat-table [dataSource]="saleItems" style="width: 100%; outline: 2px solid black">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cod">
+        <th mat-header-cell *matHeaderCellDef>Cod Produs</th>
+        <td mat-cell *matCellDef="let element">{{element.product.cod}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nume Produs</th>
+        <td mat-cell *matCellDef="let element">{{element.product.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sold_per_unit">
+        <th mat-header-cell *matHeaderCellDef>Vândut la</th>
+        <td mat-cell *matCellDef="let element">{{element.sold_per_unit ? 'Bucată' : 'Cutie/Unitate'}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="unitPrice">
+        <th mat-header-cell *matHeaderCellDef>Preț x1</th>
+        <td mat-cell *matCellDef="let element">{{element.sold_per_unit ? element.product.price_per_unit : element.product.price}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Cantitate</th>
+        <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef>Preț Total</th>
+        <td mat-cell *matCellDef="let element">{{element.total_price}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="deleteAction">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="deleteSaleItem(element)" style="color: red">
+                <mat-icon>delete</mat-icon>
+              </button>
+        </td>
+      </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" backgroundColor="primary"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="null"></tr>
+</table>

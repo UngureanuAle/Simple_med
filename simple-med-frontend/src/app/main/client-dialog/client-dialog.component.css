@@ -1,0 +1,36 @@
+.dialog-container{
+    padding: 3em;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+#search-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.field{
+    margin-right: 1em;
+}
+
+.mat-mdc-header-row{
+    background-color: #ebeaff;
+}
+
+.mat-mdc-row .mat-mdc-cell{
+    cursor: pointer;
+}
+
+.mat-mdc-row:hover{
+    background-color: #fafafa;
+}
+
+.selected-row{
+    background-color: #fafafa;
+    font-weight: bold;
+}

@@ -1,0 +1,232 @@
+<div style="width: 100%; margin-bottom: 2em;">
+    <mat-accordion multi>
+        <form [formGroup]="prescriptionReaderForm" id="prescription-form">
+            <div class="flex-box">
+                <mat-form-field>
+                    <mat-label>Serie</mat-label>
+                    <input matInput formControlName="series" readonly>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Nr.</mat-label>
+                    <input matInput formControlName="nr" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="flex-box">
+                <mat-form-field>
+                    <mat-label>Medic Prescriptor</mat-label>
+                    <input matInput formControlName="name" readonly>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Parafa</mat-label>
+                    <input matInput formControlName="stencil_nr" readonly>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Data Prescrierii</mat-label>
+                    <input matInput formControlName="created_at" readonly>
+                </mat-form-field>
+            </div>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title style="font-size: 20px;">
+                        Unitate medicala
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="flex-box">
+                    <mat-form-field class="first-input" style="width: 400px">
+                        <mat-label>Nume Unitate Medicala</mat-label>
+                        <input matInput formControlName="medical_facility" readonly>
+                    </mat-form-field>
+                    <mat-form-field class="first-input">
+                        <mat-label>Tip</mat-label>
+                        <input matInput formControlName="source" readonly>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field style="width: 400px">
+                    <mat-label>Adresa</mat-label>
+                    <input matInput formControlName="address" readonly>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>CUI</mat-label>
+                    <input matInput formControlName="cui" readonly>
+                </mat-form-field>
+
+                <div class="flex-box">
+                    <mat-form-field>
+                        <mat-label>Casa de Asigurari Contractata</mat-label>
+                        <input matInput formControlName="insurance_house" readonly>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Nr. Contract CAS</mat-label>
+                        <input matInput formControlName="insurance_house_code" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="flex-box">
+                    <mat-form-field>
+                        <mat-label>Telefon</mat-label>
+                        <input matInput formControlName="phone_nr" readonly>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" readonly>
+                    </mat-form-field>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title style="font-size: 20px;">
+                        Asigurat
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div style="display: flex; justify-content: start; align-items: start;">
+                    <div>
+                        <div class="flex-box">
+                            <mat-form-field class="first-input">
+                                <mat-label>Nume</mat-label>
+                                <input matInput formControlName="last_name" readonly>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Prenume</mat-label>
+                                <input matInput formControlName="first_name" readonly>
+                            </mat-form-field>
+                        </div>
+        
+                        <mat-form-field>
+                            <mat-label>CID</mat-label>
+                            <input matInput formControlName="cid" readonly>
+                        </mat-form-field>
+        
+                        <div class="flex-box">
+                            <mat-form-field class="first-input">
+                                <mat-label>Data Nasterii</mat-label>
+                                <input matInput formControlName="birth_date" readonly>
+                            </mat-form-field>
+                            <mat-form-field class="small">
+                                <mat-label>Sex</mat-label>
+                                <input matInput formControlName="sex" readonly>
+                            </mat-form-field>
+                            <mat-form-field class="small">
+                                <mat-label>Cetatenie</mat-label>
+                                <input matInput formControlName="nationality" readonly>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+    
+                    <div class="types-container">
+                        <div class="flex-box" style="flex-direction: column; justify-content: start; align-items: start; margin-right: 1em;">
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(0)">Salariat</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(1)">Co-asigurat</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(2)">Liber profesionist</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(3)">Copil (sub 18)</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(4)">Elev/Ucenic/Student (18-26 ani)</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(5)">Gravid/Lehuza</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(6)">Pensionar</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(7)">Veteran</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(8)">Lista B 90%</mat-checkbox>
+                        </div>
+                        <div class="flex-box" style="flex-direction: column; justify-content: start; align-items: start;">
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(9)">Revolutionar</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(10)">Handicap</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(11)">PNS</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(12)">Ajutor social</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(13)">Somaj</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(14)">Personal contractual</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(15)">Card European</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(16)">Acorduri internationale</mat-checkbox>
+                            <mat-checkbox [disabled]="true" [checked]="formatPatientType(17)">Alte categorii</mat-checkbox>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title style="font-size: 20px;">
+                        Diagnostic / Coduri Diagnostic
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table mat-table [dataSource]="diseaseTableData" class="demo-table">
+                    <ng-container matColumnDef="disease_code">
+                      <th mat-header-cell *matHeaderCellDef>Cod Diagnostic</th>
+                      <td mat-cell *matCellDef="let element">{{element.disease_code}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="disease_name">
+                      <th mat-header-cell *matHeaderCellDef>Denumire</th>
+                      <td mat-cell *matCellDef="let element">{{element.disease_name}}</td>
+                    </ng-container>
+
+              
+                    <tr mat-header-row *matHeaderRowDef="['disease_code', 'disease_name']" backgroundColor="primary"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['disease_code', 'disease_name'];"></tr>
+                  </table>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title style="font-size: 20px;">
+                        Medicamente Prescrise
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <table mat-table [dataSource]="drugInfoData" class="demo-table">
+                    <ng-container matColumnDef="nr">
+                        <th mat-header-cell *matHeaderCellDef>Nr.</th>
+                        <td mat-cell *matCellDef="let element">{{element.nr}}</td>
+                      </ng-container>
+
+                    <ng-container matColumnDef="disease_code">
+                      <th mat-header-cell *matHeaderCellDef>Cod Diagnostic</th>
+                      <td mat-cell *matCellDef="let element">{{element.disease_code}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="diagnostic_type">
+                      <th mat-header-cell *matHeaderCellDef>Tip Diag</th>
+                      <td mat-cell *matCellDef="let element">{{element.diagnostic_type}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="drug_info">
+                        <th mat-header-cell *matHeaderCellDef>Denumire/FF/Concentratie</th>
+                        <td mat-cell *matCellDef="let element">{{element.drug_info}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dose">
+                        <th mat-header-cell *matHeaderCellDef>D.S</th>
+                        <td mat-cell *matCellDef="let element">{{element.dose}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef>Cantitate</th>
+                        <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="treatment_days">
+                        <th mat-header-cell *matHeaderCellDef>Numar zile tratam.</th>
+                        <td mat-cell *matCellDef="let element">{{element.treatment_days}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="copayment_list_percent">
+                        <th mat-header-cell *matHeaderCellDef>% Pret ref.</th>
+                        <td mat-cell *matCellDef="let element">{{element.copayment_list_percent}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="copayment_list_type">
+                        <th mat-header-cell *matHeaderCellDef>Lista</th>
+                        <td mat-cell *matCellDef="let element">{{element.copayment_list_type}}</td>
+                    </ng-container>
+              
+                    <tr mat-header-row *matHeaderRowDef="['nr', 'disease_code', 'diagnostic_type', 'drug_info', 'dose', 'quantity', 'treatment_days', 'copayment_list_percent', 'copayment_list_type']" backgroundColor="primary"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['nr', 'disease_code', 'diagnostic_type', 'drug_info', 'dose', 'quantity', 'treatment_days', 'copayment_list_percent', 'copayment_list_type'];"></tr>
+                  </table>
+            </mat-expansion-panel>
+        </form>
+    </mat-accordion>
+</div>
